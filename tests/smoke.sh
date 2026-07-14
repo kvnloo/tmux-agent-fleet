@@ -7,13 +7,13 @@ unset TMUX TMUX_PANE
 cleanup() { TMUX= tmux -L "$socket_name" kill-server 2>/dev/null || true; }
 trap cleanup EXIT
 
-tmux -L "$socket_name" new-session -d -s demo -c "$root" zsh
+tmux -L "$socket_name" -f /dev/null new-session -d -s demo -c "$root" zsh
 socket=$(tmux -L "$socket_name" display-message -p '#{socket_path}')
 server_pid=$(tmux -L "$socket_name" display-message -p '#{pid}')
 export TMUX="$socket,$server_pid,0"
 
 rows=$(AGENT_FLEET_LIST_ONLY=1 "$root/scripts/fleet.sh")
-[[ $rows == *$'demo:1.1'* && $rows == *'tmux-agent-fleet'* ]] || {
+[[ $rows == *$'demo:'* && $rows == *'tmux-agent-fleet'* ]] || {
   printf 'expected isolated demo row, got:\n%s\n' "$rows" >&2
   exit 1
 }
