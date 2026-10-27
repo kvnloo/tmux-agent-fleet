@@ -1,0 +1,23 @@
+# Editor and OS debris
+*~
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.code-workspace
+
+# Local env / secrets (defensive; plugin has none by design)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+id_rsa
+id_ed25519
+
+# Test / local tmux sockets and logs
+*.log
+/tmp/
+.cache/

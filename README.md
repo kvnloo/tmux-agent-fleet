@@ -38,13 +38,20 @@ Reload tmux, then press `prefix + I`. Open the dashboard with `prefix + f`.
 ### Manual
 
 ```bash
-git clone https://github.com/kvnloo/tmux-agent-fleet ~/.tmux/plugins/tmux-agent-fleet
+git clone https://github.com/kvnloo/tmux-agent-fleet.git ~/.tmux/plugins/tmux-agent-fleet
+```
+
+Then in `~/.tmux.conf`:
+
+```tmux
 run-shell ~/.tmux/plugins/tmux-agent-fleet/agent-fleet.tmux
 ```
 
+Reload the config (`prefix + r` if bound, or `tmux source-file ~/.tmux.conf`).
+
 ## Configuration
 
-Configure options before the TPM plugin declaration:
+Configure options **before** the TPM plugin declaration (or before `run-shell` for a manual install). A full annotated copy lives in [`example.tmux.conf`](./example.tmux.conf).
 
 ```tmux
 # Binding and built-in tmux popup geometry
@@ -112,6 +119,25 @@ This plugin is a switcher and monitor, not an orchestrator. It intentionally doe
 - run a background collector;
 - send telemetry.
 
+## Testing
+
+With `tmux` and `fzf` on `PATH`:
+
+```bash
+./tests/smoke.sh
+```
+
+The smoke test starts an isolated tmux server (private socket), checks pane discovery, and verifies the default `prefix + f` binding loads from `agent-fleet.tmux`.
+
+## Versioning
+
+Tagged releases follow [SemVer](https://semver.org/) when published (for example `v0.1.0`). Until the first tag, install from `main` via TPM or clone as shown above. Prefer a release tag for production configs once available:
+
+```tmux
+set -g @plugin 'kvnloo/tmux-agent-fleet'
+# or pin: set -g @plugin 'kvnloo/tmux-agent-fleet#v0.1.0'
+```
+
 ## License
 
-MIT
+[MIT](./LICENSE) © Kevin Loo

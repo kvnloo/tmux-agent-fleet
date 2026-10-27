@@ -36,6 +36,7 @@ harness_name() {
     pi)       printf 'Pi' ;;
     fable)    printf 'Fable' ;;
     bun|node)
+      local child_commands
       child_commands=$(ps -o args= --ppid "$pane_pid" 2>/dev/null || true)
       if [[ $title == π:* || $title == *'oh my pi'* || $child_commands == *'/omp'* ]]; then
         printf 'Oh My Pi'

@@ -7,7 +7,8 @@ unset TMUX TMUX_PANE
 cleanup() { TMUX= tmux -L "$socket_name" kill-server 2>/dev/null || true; }
 trap cleanup EXIT
 
-tmux -L "$socket_name" -f /dev/null new-session -d -s demo -c "$root" zsh
+# Use bash so the smoke test does not require the user's interactive shell.
+tmux -L "$socket_name" -f /dev/null new-session -d -s demo -c "$root" bash
 socket=$(tmux -L "$socket_name" display-message -p '#{socket_path}')
 server_pid=$(tmux -L "$socket_name" display-message -p '#{pid}')
 export TMUX="$socket,$server_pid,0"
